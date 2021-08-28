@@ -6,7 +6,7 @@ import {
 } from "typeorm";
 
 @Entity()
-class User extends BaseEntity {
+class Users extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -20,4 +20,4 @@ class User extends BaseEntity {
   password!: string;
 };
 
-export default User;
+export default Users;

@@ -5,7 +5,7 @@ import log from './config/logging';
 import config from './config/config';
 import { createConnection } from 'typeorm';
 import path from 'path';
-import User from './entities/User';
+import Users from './entities/Users';
 
 import cors from './middleware/cors'
 import logRequest from './middleware/logging';
@@ -45,10 +45,10 @@ const main = async (): Promise<void> => {
       username: config.database.username,
       password: config.database.password,
       database: config.database.dbName,
-      logging: true,
+      logging: false,
       synchronize: true,
       migrations: [path.join(__dirname, "./migrations/*")],
-      entities: [User],
+      entities: [Users],
     });
   } catch (e) {
     log.error(NAMESPACE, e.message);
