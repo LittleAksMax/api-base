@@ -8,15 +8,15 @@ const info = (namespace: string, msg: string, object?: any) => {
 };
 
 const debug = (namespace: string, msg: string, object?: any) => {
-  console.log(`[${getTimeStamp()}] [-] [${namespace}] ${msg}`, object ? object : "");
+  console.debug(`[${getTimeStamp()}] [-] [${namespace}] ${msg}`, object ? object : "");
 };
 
 const warn = (namespace: string, msg: string, object?: any) => {
-  console.log(`[${getTimeStamp()}] [#] [${namespace}] ${msg}`, object ? object : "");
+  console.warn(`[${getTimeStamp()}] [#] [${namespace}] ${msg}`, object ? object : "");
 };
 
 const error = (namespace: string, msg: string, object?: any) => {
-  console.log(`[${getTimeStamp()}] [!] [${namespace}] ${msg}`, object ? object : "");
+  console.error(`[${getTimeStamp()}] [!] [${namespace}] ${msg}`, object ? object : "");
 };
 
 export default {

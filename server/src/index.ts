@@ -3,40 +3,63 @@ import http, { Server } from 'http';
 import apiRouter from './routes/api/api';
 import log from './config/logging';
 import config from './config/config';
+import { createConnection } from 'typeorm';
+import path from 'path';
+import User from './entities/User';
 
 import cors from './middleware/cors'
 import logRequest from './middleware/logging';
 import handleError from './middleware/error';
 
-const app: Application = express();
-const NAMESPACE: string = 'index';
+const main = async (): Promise<void> => {
+  const app: Application = express();
+  const NAMESPACE: string = 'index';
 
-/* Logging the request */
+  /* Logging the request */
 
-app.use(logRequest);
+  app.use(logRequest);
 
-/* Parse the request */
+  /* Parse the request */
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json({ limit: '1mb' }));
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json({ limit: '1mb' }));
 
-/* Rules of our API */
+  /* Rules of our API */
 
-app.use(cors);
+  app.use(cors);
 
-/* Routes */
+  /* Routes */
 
-app.use('/api', apiRouter);
+  app.use('/api', apiRouter);
 
-/* Error handling */
+  /* Error handling */
 
-app.use(handleError);
+  app.use(handleError);
 
-/* create server */
+  /* create server */
+  try {
+    await createConnection({
+      type: "mysql",
+      host: config.database.host,
+      port: config.database.port,
+      username: config.database.username,
+      password: config.database.password,
+      database: config.database.dbName,
+      logging: true,
+      synchronize: true,
+      migrations: [path.join(__dirname, "./migrations/*")],
+      entities: [User],
+    });
+  } catch (e) {
+    log.error(NAMESPACE, e.message);
+    return;
+  }
 
-const httpServer: Server = http.createServer(app);
+  const httpServer: Server = http.createServer(app);
 
-httpServer.listen(config.server.port, () => {
-  log.info(NAMESPACE, `Server running on http://${config.server.hostname}:${config.server.port}`);
-})
+  httpServer.listen(config.server.port, (): void => {
+    log.info(NAMESPACE, `Server running on http://${config.server.hostname}:${config.server.port}`);
+  });
+};
 
+main().catch((err: Error) => { log.error('', err.message); });
