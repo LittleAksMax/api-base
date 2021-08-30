@@ -6,7 +6,6 @@ import Users from '../../entities/Users';
 // modules
 import log from '../../config/logging';
 import { validationResult } from 'express-validator';
-// import { customIdSanitizer } from '../../validations/custom/users';
 
 const NAMESPACE: string = 'Users Controller';
 
@@ -29,6 +28,16 @@ const getUsers = async (req: Request, res: Response) => {
   });
 };
 
+const updateUser = async (_req: Request, _res: Response) => {
+
+};
+
+const deleteUser = async (_req: Request, _res: Response) => {
+
+};
+
 export default {
-  getUsers
+  getUsers,
+  updateUser,
+  deleteUser
 }

@@ -3,7 +3,10 @@ import { ValidationChain } from 'express-validator';
 
 // modules
 import { body } from 'express-validator';
-import { usernameValidationAndSanitization, emailValidationAndSanitization, passwordValidationAndSanitization } from '../custom/auth';
+import { usernameValidationAndSanitization, 
+  emailValidationAndSanitization, 
+  passwordValidationAndSanitization 
+} from '../custom/credentials';
 
 export const registerValidations: ValidationChain[] = [
   usernameValidationAndSanitization(body('username').exists()),

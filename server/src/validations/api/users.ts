@@ -2,11 +2,36 @@
 import { ValidationChain } from 'express-validator';
 
 // modules
-import { getUsersIdQueryValidation, getUsersUsernameQueryValidation, getUsersEmailQueryValidation } from '../custom/users';
-import { query } from 'express-validator';
+import { usernameValidationAndSanitization,
+  emailValidationAndSanitization,
+  passwordValidationAndSanitization,
+  idValidationAndSanitization
+} from '../custom/credentials';
+import { emailQueryValidationMessage, 
+  idQueryValidationMessage, 
+  usernameQueryValidationMessage 
+} from '../messages/users';
+import { idValidationMessage,
+  emailValidationMessage, 
+  usernameValidationMessage, 
+  passwordValidationMessage 
+} from '../messages/auth';
+import { query, body } from 'express-validator';
 
+// cannot query with password
 export const getUsersQueryValidationAndSanitization: ValidationChain[] = [
-  getUsersIdQueryValidation(query('id')),
-  getUsersUsernameQueryValidation(query('username')),
-  getUsersEmailQueryValidation(query('email'))
+  idValidationAndSanitization(query('id').optional()).withMessage(idQueryValidationMessage),
+  usernameValidationAndSanitization(query('username').optional()).withMessage(usernameQueryValidationMessage),  
+  emailValidationAndSanitization(query('email').optional()).withMessage(emailQueryValidationMessage)
+];
+
+export const updateUserBodyValidationAndSanitization = [
+    
+];
+
+export const deleteUserBodyValidationAndSanitization = [
+  idValidationAndSanitization(body('id').exists()).withMessage(idValidationMessage),
+  usernameValidationAndSanitization(body('username').exists()).withMessage(usernameValidationMessage),
+  emailValidationAndSanitization(body('email').exists()).withMessage(emailValidationMessage),
+  passwordValidationAndSanitization(body('password').exists()).withMessage(passwordValidationMessage)
 ];
