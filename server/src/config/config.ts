@@ -1,5 +1,8 @@
-import dotenv from 'dotenv';
+// types
 import { configServerType, configCorsType, configDatabaseType } from '../util/types';
+
+// modules
+import dotenv from 'dotenv';
 
 dotenv.config();
 

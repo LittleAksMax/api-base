@@ -1,3 +1,4 @@
+// types
 import { Request, Response } from 'express';
 
 const handleError = (_req: Request, res: Response) => {

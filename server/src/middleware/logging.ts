@@ -1,4 +1,7 @@
+// types
 import { Request, Response, NextFunction } from 'express';
+
+// modules
 import log from '../config/logging';
 
 const NAMESPACE: string = 'index';     // that is where this will be used 

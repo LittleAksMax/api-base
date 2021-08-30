@@ -1,12 +1,18 @@
-import express, { Application } from 'express';
-import http, { Server } from 'http';
+// types
+import { Application } from 'express';
+import { Server } from 'http';
+import Users from './entities/Users';
+
+// modules
+import express from 'express';
+import http from 'http';
 import apiRouter from './routes/api/api';
 import log from './config/logging';
 import config from './config/config';
 import { createConnection } from 'typeorm';
 import path from 'path';
-import Users from './entities/Users';
 
+// middleware
 import cors from './middleware/cors'
 import logRequest from './middleware/logging';
 import handleError from './middleware/error';
