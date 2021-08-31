@@ -1,7 +1,7 @@
 // types
 import { Application } from 'express';
 import { Server } from 'http';
-import Users from './entities/Users';
+import User from './entities/User';
 
 // modules
 import express from 'express';
@@ -9,7 +9,7 @@ import http from 'http';
 import apiRouter from './routes/api/api';
 import log from './config/logging';
 import config from './config/config';
-import { createConnection } from 'typeorm';
+import { createConnection, Connection } from 'typeorm';
 import path from 'path';
 
 // middleware
@@ -44,22 +44,33 @@ const main = async (): Promise<void> => {
 
   /* create server */
   try {
-    await createConnection({
+    const dbConnection: Connection = await createConnection({
       type: "mysql",
       host: config.database.host,
       port: config.database.port,
       username: config.database.username,
       password: config.database.password,
       database: config.database.dbName,
-      logging: false,
+      logging: true,
       synchronize: true,
       migrations: [path.join(__dirname, "./migrations/*")],
-      entities: [Users],
+      entities: [User],
     });
+    config.repos.userRepository = dbConnection.getRepository(User);
   } catch (e) {
     log.error(NAMESPACE, e.message);
     return;
   }
+
+  /* check if repositories work */
+  if (!config.repos.userRepository) {
+    log.error(NAMESPACE, `Cannot create repository userRepository`, config.repos);
+    return;
+  }
+  // @ts-ignore: Object is possibly 'null'.
+  // the above is used every now and then so that the error doesn't show up, 
+  // since it's already checked in the code above these comments if any repositories are null, 
+  // and returns if they are
 
   const httpServer: Server = http.createServer(app);
 

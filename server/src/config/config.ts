@@ -1,5 +1,5 @@
 // types
-import { configServerType, configCorsType, configDatabaseType } from '../util/types';
+import { configServerType, configCorsType, configDatabaseType, configReposType, configBcryptType } from '../util/types';
 
 // modules
 import dotenv from 'dotenv';
@@ -24,8 +24,18 @@ const server: configServerType = {
   hostname: process.env.SERVER_HOSTNAME || 'localhost'
 };
 
+const repos: configReposType = {
+  userRepository: null
+};
+
+const bcrypt: configBcryptType = {
+  salt: process.env.BCRYPT_SALT ? parseInt(process.env.BCRYPT_SALT) : 10
+}
+
 export default {
   cors,
   database,
-  server
+  server,
+  repos,
+  bcrypt
 }

@@ -1,3 +1,13 @@
+import { Repository } from "typeorm";
+import User from '../entities/User';
+
+export type usersRepoType = Repository<User>;
+
+export interface getUsersFilterType {
+  id: number | undefined;
+  username: string | undefined;
+  email: string | undefined;
+};
 
 export interface configCorsType {
   origin: string;
@@ -16,3 +26,11 @@ export interface configServerType {
   port: number;
   hostname: string;
 };
+
+export interface configReposType {
+  userRepository: usersRepoType | null;
+};
+
+export interface configBcryptType {
+  salt: number;
+}

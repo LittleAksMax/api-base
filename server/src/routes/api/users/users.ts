@@ -5,16 +5,19 @@ import { Router } from 'express';
 import express from 'express';
 import usersController from '../../../controllers/api/users';
 import { getUsersQueryValidationAndSanitization, 
-  updateUserBodyValidationAndSanitization, 
-  deleteUserBodyValidationAndSanitization
+  // updateUserBodyValidationAndSanitization, 
+  // deleteUserBodyValidationAndSanitization,
+  insertUserBodyValidationAndSanitization
 } from '../../../validations/api/users';
 
 const usersRouter: Router = express.Router();
 
-usersRouter.get('/users', getUsersQueryValidationAndSanitization, usersController.getUsers);
+usersRouter.get('/', getUsersQueryValidationAndSanitization, usersController.getUsers);
 
-usersRouter.put('/users/update-user', updateUserBodyValidationAndSanitization, usersController.updateUser);
+usersRouter.post('/add-user', insertUserBodyValidationAndSanitization, usersController.insertUser);
 
-usersRouter.delete('/users/delete-user', deleteUserBodyValidationAndSanitization, usersController.deleteUser);
+// usersRouter.put('/update-user', updateUserBodyValidationAndSanitization, usersController.updateUser);
+
+// usersRouter.delete('/delete-user', deleteUserBodyValidationAndSanitization, usersController.deleteUser);
 
 export default usersRouter;

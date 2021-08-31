@@ -11,7 +11,7 @@ import { emailQueryValidationMessage,
   idQueryValidationMessage, 
   usernameQueryValidationMessage 
 } from '../messages/users';
-import { idValidationMessage,
+import { // idValidationMessage,
   emailValidationMessage, 
   usernameValidationMessage, 
   passwordValidationMessage 
@@ -25,13 +25,22 @@ export const getUsersQueryValidationAndSanitization: ValidationChain[] = [
   emailValidationAndSanitization(query('email').optional()).withMessage(emailQueryValidationMessage)
 ];
 
-export const updateUserBodyValidationAndSanitization = [
-    
-];
-
-export const deleteUserBodyValidationAndSanitization = [
-  idValidationAndSanitization(body('id').exists()).withMessage(idValidationMessage),
+export const insertUserBodyValidationAndSanitization: ValidationChain[] = [
   usernameValidationAndSanitization(body('username').exists()).withMessage(usernameValidationMessage),
   emailValidationAndSanitization(body('email').exists()).withMessage(emailValidationMessage),
   passwordValidationAndSanitization(body('password').exists()).withMessage(passwordValidationMessage)
-];
+]
+
+// export const updateUserBodyValidationAndSanitization: ValidationChain[] = [  
+//   idValidationAndSanitization(body('id').exists()).withMessage(idValidationMessage),
+//   usernameValidationAndSanitization(body('username').exists()).withMessage(usernameValidationMessage),
+//   emailValidationAndSanitization(body('email').exists()).withMessage(emailValidationMessage),
+//   passwordValidationAndSanitization(body('password').exists()).withMessage(passwordValidationMessage)
+// ];
+
+// export const deleteUserBodyValidationAndSanitization: ValidationChain[] = [
+//   idValidationAndSanitization(body('id').exists()).withMessage(idValidationMessage),
+//   usernameValidationAndSanitization(body('username').exists()).withMessage(usernameValidationMessage),
+//   emailValidationAndSanitization(body('email').exists()).withMessage(emailValidationMessage),
+//   passwordValidationAndSanitization(body('password').exists()).withMessage(passwordValidationMessage)
+// ];
