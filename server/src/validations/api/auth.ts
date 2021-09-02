@@ -7,15 +7,13 @@ import { usernameValidationAndSanitization,
   emailValidationAndSanitization, 
   passwordValidationAndSanitization 
 } from '../custom/credentials';
+import { emailValidationMessage, 
+  usernameValidationMessage, 
+  passwordValidationMessage 
+} from '../messages/auth';
 
-export const registerValidations: ValidationChain[] = [
-  usernameValidationAndSanitization(body('username').exists()),
-  emailValidationAndSanitization(body('email').exists()),
-  passwordValidationAndSanitization(body('password').exists())
-];
-
-export const loginValidations: ValidationChain[] = [
-  usernameValidationAndSanitization(body('username')),
-  emailValidationAndSanitization(body('email')),
-  passwordValidationAndSanitization(body('password'))
+export const registerValidationsAndSanitization: ValidationChain[] = [
+  usernameValidationAndSanitization(body('username').exists()).withMessage(usernameValidationMessage),
+  emailValidationAndSanitization(body('email').exists()).withMessage(emailValidationMessage),
+  passwordValidationAndSanitization(body('password').exists()).withMessage(passwordValidationMessage)
 ];
