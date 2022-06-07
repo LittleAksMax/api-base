@@ -4,10 +4,11 @@ import { Result, ValidationError } from 'express-validator';
 
 // modules
 import { validationResult } from 'express-validator';
-import { INTERNAL_SERVER_ERROR, ITEM_ALREADY_IN_DATABASE, OK } from '../../../config/status-messages';
 import log from '../../../config/logging';
 import config from '../../../config/config';
 import bcrypt from 'bcrypt';
+import { INTERNAL_SERVER_ERROR, ITEM_ALREADY_IN_DATABASE, OK } from '../../../config/status-messages';
+import { CREDS_ALREADY_IN_DATABASE } from '../../../status-messages/auth';
 
 const NAMESPACE: string = 'Auth Controller';
 
@@ -21,7 +22,7 @@ const register = async (req: Request, res: Response) => {
     // @ts-ignore: Object is possibly 'null'.
     const foundUser: User = await config.repos.userRepository.findOne({ email: req.body.email, username: req.body.username });
     if (foundUser)
-      return res.status(409).json({ message: ITEM_ALREADY_IN_DATABASE });
+      return res.status(409).json({ message: CREDS_ALREADY_IN_DATABASE });
   } catch (e) { 
     log.error(NAMESPACE, e.message);
     return res.status(500).json({ message: INTERNAL_SERVER_ERROR });

@@ -1,0 +1,1 @@
+export const CREDS_ALREADY_IN_DATABASE: string = 'These credentials have already been used';

@@ -1,5 +1,5 @@
 // types
-import { configServerType, configCorsType, configDatabaseType, configReposType, configBcryptType } from '../util/types';
+import { configServerType, configCorsType, configDatabaseType, configReposType, configBcryptType } from '../util/types/config';
 
 // modules
 import dotenv from 'dotenv';

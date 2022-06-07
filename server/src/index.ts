@@ -17,9 +17,10 @@ import cors from './middleware/cors'
 import logRequest from './middleware/logging';
 import handleError from './middleware/error';
 
+const NAMESPACE: string = 'index';
+
 const main = async (): Promise<void> => {
   const app: Application = express();
-  const NAMESPACE: string = 'index';
 
   /* Logging the request */
 
@@ -79,4 +80,4 @@ const main = async (): Promise<void> => {
   });
 };
 
-main().catch((err: Error) => { log.error('', err.message); });
+main().catch((err: Error) => { log.error(NAMESPACE, err.message); });
